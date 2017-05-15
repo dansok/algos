@@ -1,12 +1,8 @@
 object PascalTriangle {
 	val lookup_table = new collection.mutable.HashMap[(Int, Int), Int]
 	def compute(row: Int, col: Int): Int = {
-		if (col < 0 || row < 0) {
-			throw new IllegalArgumentException("Arguments must be >= 0")
-		}
-		if (col > row) {
-			throw new IllegalArgumentException("col must be <= row")
-		}
+		require(col >= 0 && row >= 0, "row and col arguemnts must be >= 0")
+		require(col <= row, "col must be <= row")
 
 		if (col == 0 || col == row) {
 			1
