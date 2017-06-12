@@ -1,6 +1,9 @@
 class Rational(m: Int, n: Int) {
-	def numerator = m
-	def denominator = n
+	private gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
+	private val g = gcd(m, n)
+
+	def numerator = m / g
+	def denominator = n / g
 
 	def add(that: Rational): Rational =
 		new Rational(numerator * that.denominator + that.numerator * denominator,
