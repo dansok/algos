@@ -1,3 +1,4 @@
+# from MaxFlow import *
 # entrances = [0, 1]
 # exits = [4, 5]
 # path = [
@@ -8,13 +9,27 @@
 #   [0, 0, 0, 0, 0, 0],  # Room 4: Escape pods
 #   [0, 0, 0, 0, 0, 0],  # Room 5: Escape pods
 # ]
+# answer(entrances, exits, path)
+
+# entrances = [0]
+# exits = [3]
+# path = [[0, 7, 0, 0], [0, 0, 6, 0], [0, 0, 0, 8], [9, 0, 0, 0]]
+# answer(entrances, exits, path)
+
+def print_matrix(matrix):
+    for row in matrix:
+        for col in row:
+            print col,
+        print
 
 def answer(entrances, exits, path):
-    def do_single_source():
+    print_matrix(path)
+    print
+    def do_single_source(entrances, exits, path):
         if len(entrances) == 1:
-            entrance = entraces[0]
+            entrance = entrances[0]
             if entrance == 0:
-                return
+                return path
             temp = path[0]
             path[0] = path[entrance]
             path[entrance] = temp
@@ -28,9 +43,11 @@ def answer(entrances, exits, path):
             new_row[entrance] = sum(path[entrance])
             
         path = [new_row] + path
+
+        return path
         
-    def do_single_sink():
-        def sum_col(col):
+    def do_single_sink(entrances, exits, path):
+        def sum_col(path, col):
             s = 0
             for i in xrange(len(path)):
                 s += path[i][col]
@@ -41,7 +58,7 @@ def answer(entrances, exits, path):
             last = len(path)-1
             exit = exits[0]
             if exit == last:
-                return
+                return path
             temp = path[last]
             path[last] = path[exit]
             path[exit] = temp
@@ -54,5 +71,11 @@ def answer(entrances, exits, path):
         path.append(new_row)
         
         for exit in exits:
-            path[exit][len(path[0])-1] = sum_cols(exit)
-     
+            path[exit][len(path[0])-1] = sum_col(path, exit)
+
+        return path
+
+    path = do_single_sink(entrances, exits, path)
+    path = do_single_source(entrances, exits, path)
+
+    print_matrix(matrix=path)
