@@ -22,6 +22,24 @@ class Node:
 
 		return s
 
+# def treeify(headers):
+# 	def treeify_rec(headers, weight, parent):
+# 		global i
+
+# 		while (i < len(headers) and
+# 			headers[i].weight == weight):
+
+# 			child = Node(headers[i])
+# 			i += 1
+# 			treeify_rec(headers=headers, weight=weight+1, parent=child)
+# 			parent.append(child=child)
+
+# 	header = Header(0)
+# 	root = Node(header)
+# 	treeify_rec(headers=headers, weight=1, parent=root)
+
+# 	return root
+
 def treeify(headers):
 	def treeify_rec(headers, weight):
 		global i
@@ -54,11 +72,11 @@ def main():
 		Header(4, "D"),
 		Header(5, "E")]
 
-	head = treeify(headers=headers)
+	root = treeify(headers=headers)
 
-	print head.to_str()
+	print root.to_str()
 
-	return head
+	return root
 
 if __name__ == "__main__":
 	main()
