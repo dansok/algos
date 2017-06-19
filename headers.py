@@ -1,5 +1,3 @@
-i = 0
-
 class Header:
 	def __init__(self, weight, content=""):
 		self.weight = weight
@@ -41,24 +39,25 @@ class Node:
 # 	return root
 
 def treeify(headers):
-	def treeify_rec(headers, weight):
-		global i
-
+	def treeify_rec(headers, weight, i):
 		children = []
 
 		while (i < len(headers) and
 			headers[i].weight == weight):
 
+			j = i
 			i += 1
 
-			child = Node(headers[i-1],
-				treeify_rec(headers=headers, weight=weight+1))
+			right_children, i = treeify_rec(headers=headers, weight=weight+1, i=i)
+
+			child = Node(headers[j], right_children)
 
 			children.append(child)
 
-		return children
+		return children, i
 
-	return Node(Header(0), treeify_rec(headers=headers, weight=1))
+	return Node(Header(0),
+		treeify_rec(headers=headers, weight=1, i=0)[0])
 
 def main():
 	headers = [Header(1, "a"),
